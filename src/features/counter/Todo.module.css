@@ -4,10 +4,11 @@
   justify-content: center;
 }
 
-.row > button {
+.row>button {
   margin-left: 4px;
   margin-right: 8px;
 }
+
 .row:not(:last-child) {
   margin-bottom: 16px;
 }
@@ -75,4 +76,16 @@
   width: 0%;
   opacity: 1;
   transition: 0s;
+}
+
+span.strike {
+  text-decoration: line-through;
+}
+
+.todos {
+  font-size: 16px;
+}
+
+.addTodo {
+  font-size: 14px;
 }

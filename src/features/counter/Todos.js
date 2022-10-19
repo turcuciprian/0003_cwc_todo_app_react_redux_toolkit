@@ -7,19 +7,41 @@ import {
   incrementAsync,
   incrementIfOdd,
   selectCount,
-} from './counterSlice';
-import styles from './Counter.module.css';
+  addTodo,
+  changeTodo,
+  removeTodo,
+} from './todoSlice';
+import styles from './Todo.module.css';
 
-export function Counter() {
-  const count = useSelector(selectCount);
+export function Todos() {
+  const todos = useSelector(selectCount);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
+  const [newTodo, setNewTodo] = useState('');
 
-  const incrementValue = Number(incrementAmount) || 0;
 
   return (
     <div>
-      <div className={styles.row}>
+      {todos.map((item, index) => {
+        return <div key={'todo' + index} className={styles.todos}>
+          <input type={'checkbox'} checked={item.checked} onChange={() => {
+            dispatch(changeTodo(index))
+          }} /> <span className={ item.checked ? styles.strike : ''}>{item.value}</span>
+          - <button onClick={() => {
+            dispatch(removeTodo(index))
+          }}>Delete</button>
+        </div>
+      })}
+      <p className={styles.addTodo}>
+        Add new todo:<br />
+        <input type='textbox' value={newTodo} onChange={(e) => setNewTodo(e.target.value)} onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            dispatch(addTodo({ value: newTodo, checked: false }));
+            setNewTodo('');
+          }
+
+        }} />
+      </p>
+      {/* <div className={styles.row}>
         <button
           className={styles.button}
           aria-label="Decrement value"
@@ -61,7 +83,7 @@ export function Counter() {
         >
           Add If Odd
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
